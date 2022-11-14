@@ -37,6 +37,9 @@ exports.getBooks = async (req, res) => {
         {
           model: user,
           as: "user",
+          attributes: {
+            exclude: ["createdAt", "updatedAt"],
+          },
         },
         {
           model: category,
@@ -46,6 +49,9 @@ exports.getBooks = async (req, res) => {
           },
         },
       ],
+      attributes: {
+        exclude: ["createdAt", "updatedAt", "categoryId", "userId"],
+      },
     });
     res.json(books);
   } catch (error) {
@@ -64,19 +70,19 @@ exports.getBookById = async (req, res) => {
           model: user,
           as: "user",
           attributes: {
-            exclude: ["createdAt", "updatedAt", "userId"],
+            exclude: ["createdAt", "updatedAt"],
           },
         },
         {
           model: category,
           as: "category",
           attributes: {
-            exclude: ["createdAt", "updatedAt", "categoryId", "id"],
+            exclude: ["createdAt", "updatedAt", "id"],
           },
         },
       ],
       attributes: {
-        exclude: ["createdAt", "updatedAt", "userId"],
+        exclude: ["createdAt", "updatedAt", "categoryId", "userId"],
       },
     });
     res.json(books);
@@ -98,15 +104,16 @@ exports.updateBook = async (req, res) => {
   }
 };
 
-exports.deleteBook = async (req, res) => {
-  try {
-    await book.destroy({
-      where: {
-        id: req.params.id,
-      },
-    });
-    res.status(200).json({ msg: "Succeed Deleting the Book" });
-  } catch (error) {
-    console.log(error.message);
-  }
-};
+// I HAVE AN ERROR IN THE TABLE RELATION TO RUN THIS DELETE BOOK CONTROL
+// exports.deleteBook = async (req, res) => {
+//   try {
+//     await book.destroy({
+//       where: {
+//         id: req.params.id,
+//       },
+//     });
+//     res.status(200).json({ msg: "Succeed Deleting the Book" });
+//   } catch (error) {
+//     console.log(error.message);
+//   }
+// };

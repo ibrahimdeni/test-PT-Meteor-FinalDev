@@ -56,8 +56,8 @@ exports.register = async (req, res) => {
       username: req.body.name,
       email: req.body.email,
       password: hashedPassword,
-      status: "",
-      role: "admin",
+      status: "inactive",
+      role: "user",
     });
 
     //Create new Profile for the User
