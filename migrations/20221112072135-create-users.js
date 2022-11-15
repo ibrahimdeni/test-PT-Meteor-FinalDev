@@ -18,7 +18,7 @@ module.exports = {
       password: {
         type: Sequelize.STRING,
       },
-      status: {
+      userStatus: {
         type: Sequelize.STRING,
       },
       role: {

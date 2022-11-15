@@ -1,4 +1,4 @@
-const { book, bookcategory, user, profile, category } = require("../../models");
+const { book, user, profile, borrow, category } = require("../../models");
 
 exports.addBook = async (req, res) => {
   const {
@@ -21,7 +21,7 @@ exports.addBook = async (req, res) => {
       image: image,
       isbn: isbn,
       categoryId: categoryId,
-      status: "inactive",
+      bookStatus: "inactive",
     });
 
     res.json({ msg: "Succeed Adding Book" });
@@ -35,17 +35,31 @@ exports.getBooks = async (req, res) => {
     const books = await book.findAll({
       include: [
         {
-          model: user,
-          as: "user",
+          model: category,
+          as: "category",
           attributes: {
             exclude: ["createdAt", "updatedAt"],
           },
         },
         {
-          model: category,
-          as: "category",
+          model: borrow,
+          as: "borrows",
           attributes: {
-            exclude: ["createdAt", "updatedAt", "id"],
+            exclude: ["createdAt", "updatedAt"],
+          },
+          include: {
+            model: user,
+            as: "borrower",
+            attributes: {
+              exclude: ["createdAt", "updatedAt", "refresh_token", "password"],
+            },
+          },
+          include: {
+            model: book,
+            as: "book",
+            attributes: {
+              exclude: ["createdAt", "updatedAt"],
+            },
           },
         },
       ],
@@ -67,17 +81,31 @@ exports.getBookById = async (req, res) => {
       },
       include: [
         {
-          model: user,
-          as: "user",
+          model: category,
+          as: "category",
           attributes: {
             exclude: ["createdAt", "updatedAt"],
           },
         },
         {
-          model: category,
-          as: "category",
+          model: borrow,
+          as: "borrows",
           attributes: {
-            exclude: ["createdAt", "updatedAt", "id"],
+            exclude: ["createdAt", "updatedAt"],
+          },
+          include: {
+            model: user,
+            as: "borrower",
+            attributes: {
+              exclude: ["createdAt", "updatedAt", "refresh_token", "password"],
+            },
+          },
+          include: {
+            model: book,
+            as: "book",
+            attributes: {
+              exclude: ["createdAt", "updatedAt"],
+            },
           },
         },
       ],
@@ -85,6 +113,7 @@ exports.getBookById = async (req, res) => {
         exclude: ["createdAt", "updatedAt", "categoryId", "userId"],
       },
     });
+
     res.json(books);
   } catch (error) {
     console.log(error);

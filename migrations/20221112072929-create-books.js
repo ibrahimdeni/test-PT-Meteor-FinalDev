@@ -30,7 +30,7 @@ module.exports = {
       image: {
         type: Sequelize.STRING,
       },
-      status: {
+      bookStatus: {
         type: Sequelize.STRING,
       },
       categoryId: {

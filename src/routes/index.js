@@ -29,6 +29,12 @@ const {
   updateBook,
   deleteBook,
 } = require("../controllers/book.js");
+const {
+  addBorrow,
+  getBorrows,
+  getBorrowById,
+  updateBorrow,
+} = require("../controllers/borrow.js");
 const { refreshToken } = require("../controllers/refreshToken.js");
 const { verifyToken } = require("../middlewares/VerifyToken.js");
 
@@ -60,5 +66,9 @@ router.patch("/books/:id", verifyToken, updateBook);
 // router.delete("/books/:id", verifyToken, deleteBook); // I HAVE AN ERROR IN THE TABLE RELATION TO RUN THIS DELETE CONTROL
 
 // Borrow Routes ---
+router.post("/borrow", verifyToken, addBorrow);
+router.get("/borrows", verifyToken, getBorrows);
+router.get("/borrows/:id", verifyToken, getBorrowById);
+router.patch("/borrows/:id", verifyToken, updateBorrow);
 
 module.exports = router;

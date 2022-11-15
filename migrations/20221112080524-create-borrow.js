@@ -28,10 +28,9 @@ module.exports = {
         onDelete: "CASCADE",
       },
       returnDate: {
-        allowNull: false,
-        type: Sequelize.DATE,
+        type: Sequelize.STRING,
       },
-      status: {
+      borrowStatus: {
         type: Sequelize.STRING,
       },
       createdAt: {

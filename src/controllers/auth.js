@@ -56,7 +56,7 @@ exports.register = async (req, res) => {
       username: req.body.name,
       email: req.body.email,
       password: hashedPassword,
-      status: "inactive",
+      userStatus: "inactive",
       role: "user",
     });
 
@@ -77,7 +77,7 @@ exports.register = async (req, res) => {
       data: {
         name: newUser.username,
         email: newUser.email,
-        status: newUser.status,
+        userStatus: newUser.userStatus,
         role: newUser.role,
       },
     });
